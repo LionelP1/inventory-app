@@ -57,9 +57,37 @@ const getGamesByFilters = async (gameTitle, publisherName, genreName) => {
   return rows;
 };
 
+const getGamesByPublisherId = async (publisherId) => {
+  const query = `
+    SELECT games.*, publishers.name AS publisher, genres.title AS genre
+    FROM games
+    JOIN publishers ON games.publisher_id = publishers.id
+    JOIN genres ON games.genre_id = genres.id
+    WHERE publishers.id = $1
+  `;
+  
+  const { rows } = await pool.query(query, [publisherId]);
+  return rows;
+};
+
+const getGamesByGenreId = async (genreId) => {
+  const query = `
+    SELECT games.*, publishers.name AS publisher, genres.title AS genre
+    FROM games
+    JOIN publishers ON games.publisher_id = publishers.id
+    JOIN genres ON games.genre_id = genres.id
+    WHERE genres.id = $1
+  `;
+  
+  const { rows } = await pool.query(query, [genreId]);
+  return rows;
+};
+
 module.exports = {
   getAllRows,
   insertRow,
   deleteRow,
   getGamesByFilters,
+  getGamesByPublisherId,
+  getGamesByGenreId,
 };
