@@ -57,12 +57,11 @@ const getGamesByFilters = async (gameTitle, publisherName, genreName) => {
   return rows;
 };
 
-const getGamesByPublisherId = async (publisherId) => {
+const getPublisherDetailsById = async (publisherId) => {
   const query = `
-    SELECT games.*, publishers.name AS publisher, genres.title AS genre
-    FROM games
-    JOIN publishers ON games.publisher_id = publishers.id
-    JOIN genres ON games.genre_id = genres.id
+    SELECT publishers.*, games.title AS game_title, games.image AS game_image
+    FROM publishers
+    LEFT JOIN games ON publishers.id = games.publisher_id
     WHERE publishers.id = $1
   `;
   
@@ -70,12 +69,11 @@ const getGamesByPublisherId = async (publisherId) => {
   return rows;
 };
 
-const getGamesByGenreId = async (genreId) => {
+const getGenreDetailsById = async (genreId) => {
   const query = `
-    SELECT games.*, publishers.name AS publisher, genres.title AS genre
-    FROM games
-    JOIN publishers ON games.publisher_id = publishers.id
-    JOIN genres ON games.genre_id = genres.id
+    SELECT genres.*, games.title AS game_title, games.image AS game_image
+    FROM genres
+    LEFT JOIN games ON genres.id = games.genre_id
     WHERE genres.id = $1
   `;
   
@@ -83,11 +81,27 @@ const getGamesByGenreId = async (genreId) => {
   return rows;
 };
 
+const getGameDetailsById = async (gameId) => {
+  const query = `
+    SELECT 
+    games.*, genres.title AS genre_title, publishers.name AS publisher_name
+    FROM games
+    JOIN genres ON games.genre_id = genres.id
+    JOIN publishers ON games.publisher_id = publishers.id
+    WHERE games.id = $1
+  `;
+
+  const { rows } = await pool.query(query, [gameId]);
+  return rows[0];
+};
+
+
 module.exports = {
   getAllRows,
   insertRow,
   deleteRow,
   getGamesByFilters,
-  getGamesByPublisherId,
-  getGamesByGenreId,
+  getPublisherDetailsById,
+  getGenreDetailsById,
+  getGameDetailsById,
 };
