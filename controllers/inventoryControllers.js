@@ -59,7 +59,7 @@ export const deleteRow = async (req, res) => {
 export const getGames = async (req, res) => {
   try {
     const { gameTitle, publisherName, genreName } = req.query;
-    const games = await getGamesByFilters(gameTitle, publisherName, genreName);
+    const games = await queries.getGamesByFilters(gameTitle, publisherName, genreName);
     res.status(200).json(games);
   } catch (error) {
     console.error(error);
@@ -70,7 +70,7 @@ export const getGames = async (req, res) => {
 export const getPublisher = async (req, res) => {
   try {
     const { id } = req.params;
-    const publisherDetails = await getPublisherDetailsById(id);
+    const publisherDetails = await queries.getPublisherDetailsById(id);
     if (publisherDetails.length > 0) {
       res.status(200).json(publisherDetails);
     } else {
@@ -85,7 +85,7 @@ export const getPublisher = async (req, res) => {
 export const getGenre = async (req, res) => {
   try {
     const { id } = req.params;
-    const genreDetails = await getGenreDetailsById(id);
+    const genreDetails = await queries.getGenreDetailsById(id);
     if (genreDetails.length > 0) {
       res.status(200).json(genreDetails);
     } else {
@@ -100,7 +100,7 @@ export const getGenre = async (req, res) => {
 export const getGame = async (req, res) => {
   try {
     const { id } = req.params;
-    const gameDetails = await getGameDetailsById(id);
+    const gameDetails = await queries.getGameDetailsById(id);
     if (gameDetails) {
       res.status(200).json(gameDetails);
     } else {
