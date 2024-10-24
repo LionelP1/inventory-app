@@ -55,3 +55,59 @@ export const deleteRow = async (req, res) => {
     res.status(500).json({ message: 'Error deleting row' });
   }
 };
+
+export const getGames = async (req, res) => {
+  try {
+    const { gameTitle, publisherName, genreName } = req.query;
+    const games = await getGamesByFilters(gameTitle, publisherName, genreName);
+    res.status(200).json(games);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error retrieving games' });
+  }
+};
+
+export const getPublisher = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const publisherDetails = await getPublisherDetailsById(id);
+    if (publisherDetails.length > 0) {
+      res.status(200).json(publisherDetails);
+    } else {
+      res.status(404).json({ message: 'Publisher not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error retrieving publisher details' });
+  }
+};
+
+export const getGenre = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const genreDetails = await getGenreDetailsById(id);
+    if (genreDetails.length > 0) {
+      res.status(200).json(genreDetails);
+    } else {
+      res.status(404).json({ message: 'Genre not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error retrieving genre details' });
+  }
+};
+
+export const getGame = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const gameDetails = await getGameDetailsById(id);
+    if (gameDetails) {
+      res.status(200).json(gameDetails);
+    } else {
+      res.status(404).json({ message: 'Game not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error retrieving game details' });
+  }
+};
