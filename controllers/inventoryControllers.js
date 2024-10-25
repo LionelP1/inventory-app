@@ -2,7 +2,6 @@ const queries = require('../queries/gameQueries');
 
 const allowedTables = ['games', 'publishers', 'orders'];
 
-
 export const renderAllData = async (req, res) => {
   const { tableName } = req.params;
 

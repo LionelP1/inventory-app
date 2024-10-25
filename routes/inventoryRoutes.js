@@ -1,20 +1,20 @@
 const express = require('express');
 const controllers = require('../controllers/inventoryControllers');
-
 const router = express.Router();
 
-router.get('/:tableName', getAllRows);
+router.get('/:tableName', controllers.renderAllData);
 
-router.post('/:tableName', insertRow);
+router.post('/add/:tableName', controllers.insertRow);
 
-router.delete('/:tableName/:id', deleteRow);
+router.delete('/delete/:tableName/:id', controllers.deleteRow);
 
-router.get('/games/search', getGames);
+router.get('/games/', controllers.renderFilteredGames);
 
-router.get('/publishers/:id', getPublisher);
+router.get('/publishers/:id', controllers.renderPublisherDetails);
 
-router.get('/genres/:id', getGenre);
+router.get('/genres/:id', controllers.renderGenreDetails);
 
-router.get('/games/:id', getGame);
+router.get('/games/:id', controllers.renderGameDetails);
 
 module.exports = router;
+
