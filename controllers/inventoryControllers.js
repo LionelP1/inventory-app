@@ -36,6 +36,8 @@ export const insertRow = async (req, res) => {
   }
 };
 
+
+// DELETING
 export const deleteGame = async (req, res) => {
   const { id } = req.params;
 
@@ -84,6 +86,8 @@ export const deleteGenre = async (req, res) => {
   }
 };
 
+
+//RENDERING FILTERED GAMES
 export const renderFilteredGames = async (req, res) => {
   const { gameTitle, publisherName, genreName } = req.query;
 
@@ -93,6 +97,24 @@ export const renderFilteredGames = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).render('error', { message: 'Error retrieving games' });
+  }
+};
+
+
+// RENDERING DETAILS
+export const renderGameDetails = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const gameDetails = await queries.getGameDetailsById(id);
+
+    if (gameDetails) {
+      res.render('gameDetails', { gameDetails });
+    } else {
+      res.status(404).render('error', { message: 'Game not found' });
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(500).render('error', { message: 'Error retrieving game details' });
   }
 };
 
@@ -128,22 +150,8 @@ export const renderGenreDetails = async (req, res) => {
   }
 };
 
-export const renderGameDetails = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const gameDetails = await queries.getGameDetailsById(id);
 
-    if (gameDetails) {
-      res.render('gameDetails', { gameDetails });
-    } else {
-      res.status(404).render('error', { message: 'Game not found' });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).render('error', { message: 'Error retrieving game details' });
-  }
-};
-
+// UPDATING
 export const updateGame = async (req, res) => {
   const { id } = req.params;
   const updateValues = req.body;
@@ -192,5 +200,84 @@ export const updateGenre = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Error updating genre' });
+  }
+};
+
+
+// RENDERING FORMS
+export const renderGameForm = (req, res) => {
+  try {
+    res.render('gameForm');
+  } catch (error) {
+    console.error('Error rendering game form:', error);
+    res.status(500).render('error', { message: 'Error rendering game form' });
+  }
+};
+
+export const renderPublisherForm = (req, res) => {
+  try {
+    res.render('publisherForm');
+  } catch (error) {
+    console.error('Error rendering publisher form:', error);
+    res.status(500).render('error', { message: 'Error rendering publisher form' });
+  }
+};
+
+export const renderGenreForm = (req, res) => {
+  try {
+    res.render('genreForm');
+  } catch (error) {
+    console.error('Error rendering genre form:', error);
+    res.status(500).render('error', { message: 'Error rendering genre form' });
+  }
+};
+
+
+// SUBMITTING FORMS
+export const submitGameForm = async (req, res) => {
+  const { action, id, title, releaseDate, publisherId, genreId } = req.body;
+
+  try {
+      if (action === 'edit') {
+          await queries.updateGame({ id, title, releaseDate, publisherId, genreId });
+      } else if (action === 'add') {
+          await queries.insertRow('games', ['title', 'releaseDate', 'publisherId', 'genreId'], [title, releaseDate, publisherId, genreId]);
+      }
+      return res.redirect('/games');
+  } catch (error) {
+      console.error(error);
+      return res.status(500).render('error', { message: 'Error processing the game submission' });
+  }
+};
+
+export const submitPublisherForm = async (req, res) => {
+  const { action, id, name } = req.body;
+
+  try {
+      if (action === 'edit') {
+          await queries.updatePublisher({ id, name });
+      } else if (action === 'add') {
+          await queries.insertRow('publishers', ['name'], [name]);
+      }
+      return res.redirect('/publishers');
+  } catch (error) {
+      console.error(error);
+      return res.status(500).render('error', { message: 'Error processing the publisher submission' });
+  }
+};
+
+export const submitGenreForm = async (req, res) => {
+  const { action, id, name } = req.body;
+
+  try {
+      if (action === 'edit') {
+          await queries.updateGenre({ id, name });
+      } else if (action === 'add') {
+          await queries.insertRow('genres', ['name'], [name]);
+      }
+      return res.redirect('/genres');
+  } catch (error) {
+      console.error(error);
+      return res.status(500).render('error', { message: 'Error processing the genre submission' });
   }
 };
