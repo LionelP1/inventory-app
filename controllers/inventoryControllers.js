@@ -18,25 +18,6 @@ export const renderAllData = async (req, res) => {
   }
 };
 
-export const insertRow = async (req, res) => {
-  const { tableName } = req.params;
-
-  if (!allowedTables.includes(tableName)) {
-    return res.status(400).json({ message: 'Invalid table name' });
-  }
-
-  const { columns, values } = req.body;
-
-  try {
-    await queries.insertRow(tableName, columns, values);
-    res.status(201).json({ message: 'Row inserted successfully' });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error inserting row' });
-  }
-};
-
-
 // DELETING
 export const deleteGame = async (req, res) => {
   const { id } = req.params;
@@ -147,59 +128,6 @@ export const renderGenreDetails = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).render('error', { message: 'Error retrieving genre details' });
-  }
-};
-
-
-// UPDATING
-export const updateGame = async (req, res) => {
-  const { id } = req.params;
-  const updateValues = req.body;
-
-  try {
-    const updatedGame = await queries.updateGame({ ...updateValues, id });
-    if (updatedGame) {
-      res.status(200).json(updatedGame);
-    } else {
-      res.status(404).json({ message: 'Game not found' });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error updating game' });
-  }
-};
-
-export const updatePublisher = async (req, res) => {
-  const { id } = req.params;
-  const updateValues = req.body;
-
-  try {
-    const updatedPublisher = await queries.updatePublisher({ ...updateValues, id });
-    if (updatedPublisher) {
-      res.status(200).json(updatedPublisher);
-    } else {
-      res.status(404).json({ message: 'Publisher not found' });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error updating publisher' });
-  }
-};
-
-export const updateGenre = async (req, res) => {
-  const { id } = req.params;
-  const updateValues = req.body;
-
-  try {
-    const updatedGenre = await queries.updateGenre({ ...updateValues, id });
-    if (updatedGenre) {
-      res.status(200).json(updatedGenre);
-    } else {
-      res.status(404).json({ message: 'Genre not found' });
-    }
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error updating genre' });
   }
 };
 
