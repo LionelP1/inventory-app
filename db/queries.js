@@ -6,9 +6,29 @@ const getAllRows = async (tableName) => {
   return rows;
 };
 
-const deleteRow = async (tableName, id) => {
-  const query = `DELETE FROM ${tableName} WHERE id = $1 RETURNING *`;
-  const { rows } = await pool.query(query, [id]);
+const deleteGame = async (gameId) => {
+  const query = `DELETE FROM games WHERE id = $1 RETURNING *`;
+  const { rows } = await pool.query(query, [gameId]);
+  return rows[0];
+};
+
+const deletePublisher = async (publisherId) => {
+  const deleteGamesQuery = `DELETE FROM games WHERE publisher_id = $1`;
+  await pool.query(deleteGamesQuery, [publisherId]);
+
+  const deletePublisherQuery = `DELETE FROM publishers WHERE id = $1 RETURNING *`;
+  const { rows } = await pool.query(deletePublisherQuery, [publisherId]);
+
+  return rows[0];
+};
+
+const deleteGenre = async (genreId) => {
+  const deleteGamesQuery = `DELETE FROM games WHERE genre_id = $1`;
+  await pool.query(deleteGamesQuery, [genreId]);
+
+  const deleteGenreQuery = `DELETE FROM genres WHERE id = $1 RETURNING *`;
+  const { rows } = await pool.query(deleteGenreQuery, [genreId]);
+
   return rows[0];
 };
 
@@ -17,9 +37,7 @@ const insertRow = async (tableName, columns, values) => {
     
     //Created placeholders for SQL injection
     const placeholders = columns.map((_, index) => `$${index + 1}`).join(", "); 
-    
     const query = `INSERT INTO ${tableName} (${columnList}) VALUES (${placeholders})`;
-    
     await pool.query(query, values);
 };
 
@@ -95,13 +113,67 @@ const getGameDetailsById = async (gameId) => {
   return rows[0];
 };
 
+const updateGame = async (updateValues) => {
+  const { id, title, release_date, publisher_id, genre_id, image } = updateValues;
+  
+  const query = `
+    UPDATE game 
+    SET 
+      title = $1, 
+      release_date = $2, 
+      publisher_id = $3, 
+      genre_id = $4, 
+      image = $5
+    WHERE id = $6
+    RETURNING *`;
+
+  const { rows } = await pool.query(query, [title, release_date, publisher_id, genre_id, image, id]);
+  return rows[0];
+};
+
+const updatePublisher = async (updateValues) => {
+  const { id, name, image } = updateValues;
+  
+  const query = `
+    UPDATE publishers
+    SET 
+      name = $1, 
+      image = $2
+    WHERE id = $3
+    RETURNING *`;
+
+  const { rows } = await pool.query(query, [name, image, id]);
+  return rows[0];
+};
+
+const updateGenre = async (updateValues) => {
+  const { id, name, image } = updateValues;
+  
+  const query = `
+    UPDATE genres
+    SET 
+      name = $1, 
+      image = $2
+    WHERE id = $3
+    RETURNING *`;
+
+  const { rows } = await pool.query(query, [name, image, id]);
+  return rows[0];
+};
+
+
 
 module.exports = {
   getAllRows,
   insertRow,
-  deleteRow,
+  deleteGame,
+  deletePublisher,
+  deleteGenre,
   getGamesByFilters,
   getPublisherDetailsById,
   getGenreDetailsById,
   getGameDetailsById,
+  updateGame,
+  updatePublisher,
+  updateGenre,
 };
