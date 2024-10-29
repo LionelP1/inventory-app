@@ -8,6 +8,7 @@ router.delete('/publishers/:id', controllers.deletePublisher);
 router.delete('/genres/:id', controllers.deleteGenre);
 
 // Routes for rendering data
+router.get('/games', controllers.renderFilteredGames);
 router.get('/:tableName', controllers.renderAllData);
 router.get('/games/search', controllers.renderFilteredGames);
 router.get('/games/:id', controllers.renderGameDetails);

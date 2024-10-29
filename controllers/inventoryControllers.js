@@ -74,7 +74,7 @@ export const renderFilteredGames = async (req, res) => {
 
   try {
     const games = await queries.getGamesByFilters(gameTitle, publisherName, genreName);
-    res.render('games', { games });
+    res.render('gamePage', { games, gameTitle, publisherName, genreName });
   } catch (error) {
     console.error(error);
     res.status(500).render('error', { message: 'Error retrieving games' });
