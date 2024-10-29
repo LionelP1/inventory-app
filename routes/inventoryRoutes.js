@@ -9,7 +9,7 @@ router.delete('/genres/:id', controllers.deleteGenre);
 
 // Routes for rendering data
 router.get('/:tableName', controllers.renderAllData);
-router.get('/games', controllers.renderFilteredGames);
+router.get('/games/search', controllers.renderFilteredGames);
 router.get('/games/:id', controllers.renderGameDetails);
 router.get('/publishers/:id', controllers.renderPublisherDetails);
 router.get('/genres/:id', controllers.renderGenreDetails);
