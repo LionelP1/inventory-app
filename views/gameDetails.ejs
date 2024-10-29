@@ -1,0 +1,13 @@
+<div class="game-detail-container">
+  <h2>Game Details</h2>
+  <div class="game-detail">
+      <h3><%= gameDetails.title %></h3>
+      <img src="<%= gameDetails.image %>" alt="<%= gameDetails.title %>" class="game-detail-image"> <!-- Displaying the game image -->
+      
+      <p><strong>Release Date:</strong> <%= new Date(gameDetails.release_date).toLocaleDateString() %></p> <!-- Displaying the release date -->
+      <p><strong>Publisher:</strong> <%= gameDetails.publisher_name %></p> <!-- Displaying the publisher name -->
+      <p><strong>Genre:</strong> <%= gameDetails.genre_title %></p> <!-- Displaying the genre name -->
+  </div>
+
+  <a href="/games/form?action=add">Add New Game</a>
+</div>
