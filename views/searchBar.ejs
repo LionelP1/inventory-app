@@ -1,0 +1,12 @@
+<form action="/games" method="GET" class="search-bar">
+  <label for="gameTitle">Game Title:</label>
+  <input type="text" id="gameTitle" name="gameTitle" placeholder="Search by Game Title" value="<%= gameTitle || '' %>">
+
+  <label for="publisherName">Publisher:</label>
+  <input type="text" id="publisherName" name="publisherName" placeholder="Search by Publisher" value="<%= publisherName || '' %>">
+
+  <label for="genreName">Genre:</label>
+  <input type="text" id="genreName" name="genreName" placeholder="Search by Genre" value="<%= genreName || '' %>">
+
+  <button type="submit">Search</button>
+</form>
