@@ -1,0 +1,19 @@
+<form action="/games/form<%= game ? `/${game.id}?action=edit` : '?action=add' %>" method="POST">
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" value="<%= game ? game.title : '' %>" required>
+  
+    <label for="releaseDate">Release Date:</label>
+    <input type="date" id="releaseDate" name="releaseDate" value="<%= game ? game.releaseDate : '' %>" required>
+  
+    <label for="publisherId">Publisher:</label>
+    <input type="number" id="publisherId" name="publisherId" value="<%= game ? game.publisherId : '' %>" required>
+  
+    <label for="genreId">Genre:</label>
+    <input type="number" id="genreId" name="genreId" value="<%= game ? game.genreId : '' %>" required>
+  
+    <label for="image">Image URL:</label>
+    <input type="url" id="image" name="image" value="<%= game ? game.image : '' %>" required>
+  
+    <button type="submit"><%= game ? 'Update Game' : 'Add Game' %></button>
+  </form>
+  

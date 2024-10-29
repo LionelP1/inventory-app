@@ -1,0 +1,10 @@
+<form action="/genres/form<%= genre ? `/${genre.id}?action=edit` : '?action=add' %>" method="POST">
+    <label for="name">Genre Name:</label>
+    <input type="text" id="name" name="name" value="<%= genre ? genre.name : '' %>" required>
+  
+    <label for="image">Image URL:</label>
+    <input type="url" id="image" name="image" value="<%= genre ? genre.image : '' %>" required>
+  
+    <button type="submit"><%= genre ? 'Update Genre' : 'Add Genre' %></button>
+  </form>
+  

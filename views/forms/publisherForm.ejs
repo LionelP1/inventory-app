@@ -1,0 +1,10 @@
+<form action="/publishers/form<%= publisher ? `/${publisher.id}?action=edit` : '?action=add' %>" method="POST">
+    <label for="name">Publisher Name:</label>
+    <input type="text" id="name" name="name" value="<%= publisher ? publisher.name : '' %>" required>
+  
+    <label for="image">Image URL:</label>
+    <input type="url" id="image" name="image" value="<%= publisher ? publisher.image : '' %>" required>
+  
+    <button type="submit"><%= publisher ? 'Update Publisher' : 'Add Publisher' %></button>
+  </form>
+  
