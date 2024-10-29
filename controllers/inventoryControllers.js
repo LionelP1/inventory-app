@@ -14,7 +14,7 @@ export const renderAllData = async (req, res) => {
     res.render(tableName, { rows });
   } catch (error) {
     console.error(error);
-    res.status(500).render('error', { message: 'Error retrieving data' }); // Render an error page if there's an error
+    res.status(500).render('error', { message: 'Error retrieving data' });
   }
 };
 
@@ -134,7 +134,7 @@ export const renderGenreDetails = async (req, res) => {
 
 // RENDERING FORMS
 export const renderGameForm = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.query.id;
 
   try {
     let game;
@@ -152,7 +152,7 @@ export const renderGameForm = async (req, res) => {
 };
 
 export const renderPublisherForm = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.query.id;
 
   try {
     let publisher;
@@ -170,7 +170,7 @@ export const renderPublisherForm = async (req, res) => {
 };
 
 export const renderGenreForm = async (req, res) => {
-  const { id } = req.params; 
+  const { id } = req.query.id;
 
   try {
     let genre;
@@ -191,7 +191,7 @@ export const renderGenreForm = async (req, res) => {
 // SUBMITTING FORMS
 export const submitGameForm = async (req, res) => {
   const { action, title, releaseDate, publisherId, genreId, image } = req.body;
-  const { id } = req.params;
+  const { id } = req.query.id;
 
   try {
       if (action === 'edit') {
@@ -208,7 +208,7 @@ export const submitGameForm = async (req, res) => {
 
 export const submitPublisherForm = async (req, res) => {
   const { action, name, image } = req.body;
-  const { id } = req.params;
+  const { id } = req.query.id;
 
   try {
     if (action === 'edit') {
@@ -225,7 +225,7 @@ export const submitPublisherForm = async (req, res) => {
 
 export const submitGenreForm = async (req, res) => {
   const { action, name, image } = req.body;
-  const { id } = req.params;
+  const { id } = req.query.id;
 
   try {
       if (action === 'edit') {
