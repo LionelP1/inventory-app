@@ -133,27 +133,54 @@ export const renderGenreDetails = async (req, res) => {
 
 
 // RENDERING FORMS
-export const renderGameForm = (req, res) => {
+export const renderGameForm = async (req, res) => {
+  const { id } = req.params;
+
   try {
-    res.render('gameForm');
+    let game;
+    if (id) { // For editing game instead of creating new game
+      game = await queries.getGameDetailsById(id);
+      if (!game) {
+        return res.status(404).render('error', { message: 'Game not found' });
+      }
+    }
+    res.render('gameForm', { game }); 
   } catch (error) {
     console.error('Error rendering game form:', error);
     res.status(500).render('error', { message: 'Error rendering game form' });
   }
 };
 
-export const renderPublisherForm = (req, res) => {
+export const renderPublisherForm = async (req, res) => {
+  const { id } = req.params;
+
   try {
-    res.render('publisherForm');
+    let publisher;
+    if (id) { // For editing publisher instead of creating new publisher
+      publisher = await queries.getPublisherDetailsById(id);
+      if (!publisher) {
+        return res.status(404).render('error', { message: 'Publisher not found' });
+      }
+    }
+    res.render('publisherForm', { publisher });
   } catch (error) {
     console.error('Error rendering publisher form:', error);
     res.status(500).render('error', { message: 'Error rendering publisher form' });
   }
 };
 
-export const renderGenreForm = (req, res) => {
+export const renderGenreForm = async (req, res) => {
+  const { id } = req.params; 
+
   try {
-    res.render('genreForm');
+    let genre;
+    if (id) {
+      genre = await queries.getGenreDetailsById(id); // For editing publisher instead of creating new publisher
+      if (!genre) {
+        return res.status(404).render('error', { message: 'Genre not found' });
+      }
+    }
+    res.render('genreForm', { genre });
   } catch (error) {
     console.error('Error rendering genre form:', error);
     res.status(500).render('error', { message: 'Error rendering genre form' });
@@ -163,13 +190,14 @@ export const renderGenreForm = (req, res) => {
 
 // SUBMITTING FORMS
 export const submitGameForm = async (req, res) => {
-  const { action, id, title, releaseDate, publisherId, genreId } = req.body;
+  const { action, title, releaseDate, publisherId, genreId, image } = req.body;
+  const { id } = req.params;
 
   try {
       if (action === 'edit') {
-          await queries.updateGame({ id, title, releaseDate, publisherId, genreId });
+          await queries.updateGame({ id, title, releaseDate, publisherId, genreId, image });
       } else if (action === 'add') {
-          await queries.insertRow('games', ['title', 'releaseDate', 'publisherId', 'genreId'], [title, releaseDate, publisherId, genreId]);
+          await queries.insertRow('games', ['title', 'releaseDate', 'publisherId', 'genreId', 'image'], [title, releaseDate, publisherId, genreId, image]);
       }
       return res.redirect('/games');
   } catch (error) {
@@ -179,29 +207,31 @@ export const submitGameForm = async (req, res) => {
 };
 
 export const submitPublisherForm = async (req, res) => {
-  const { action, id, name } = req.body;
+  const { action, name, image } = req.body;
+  const { id } = req.params;
 
   try {
-      if (action === 'edit') {
-          await queries.updatePublisher({ id, name });
-      } else if (action === 'add') {
-          await queries.insertRow('publishers', ['name'], [name]);
-      }
-      return res.redirect('/publishers');
+    if (action === 'edit') {
+      await queries.updatePublisher({ id, name, image });
+    } else if (action === 'add') {
+      await queries.insertRow('publishers', ['name', 'image'], [name, image]);
+    }
+    return res.redirect('/publishers');
   } catch (error) {
-      console.error(error);
-      return res.status(500).render('error', { message: 'Error processing the publisher submission' });
+    console.error('Error processing the publisher submission:', error);
+    return res.status(500).render('error', { message: 'Error processing the publisher submission' });
   }
 };
 
 export const submitGenreForm = async (req, res) => {
-  const { action, id, name } = req.body;
+  const { action, name, image } = req.body;
+  const { id } = req.params;
 
   try {
       if (action === 'edit') {
-          await queries.updateGenre({ id, name });
+          await queries.updateGenre({ id, name, image });
       } else if (action === 'add') {
-          await queries.insertRow('genres', ['name'], [name]);
+          await queries.insertRow('genres', ['name', 'image'], [name, image]);
       }
       return res.redirect('/genres');
   } catch (error) {
