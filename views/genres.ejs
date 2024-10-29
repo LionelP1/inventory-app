@@ -1,0 +1,15 @@
+<div class="genres-container">
+  <h2>List of Genres</h2>
+  <div class="genres-gallery">
+      <% rows.forEach(genre => { %>
+          <div class="genre-item">
+              <a href="/genres/<%= genre.id %>">
+                  <img src="<%= genre.image %>" alt="<%= genre.name %>" class="genre-image">
+                  <p class="genre-name"><%= genre.name %></p>
+              </a>
+          </div>
+      <% }); %>
+  </div>
+
+  <a href="/add">Add New Genre</a>
+</div>
