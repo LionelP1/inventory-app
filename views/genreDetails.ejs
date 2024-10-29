@@ -1,0 +1,27 @@
+<div class="genre-detail-container">
+  <h2>Genre Details</h2>
+  <div class="genre-detail">
+      <h3><%= genreDetails[0].name %></h3>
+      <img src="<%= genreDetails[0].imageUrl %>" alt="<%= genreDetails[0].name %>" class="genre-detail-image"> <!-- Assuming there's an image for the genre -->
+      
+      <h4>Games in this Genre:</h4>
+      <div class="games-list">
+          <% if (genreDetails[0].game_title) { %> 
+              <ul>
+                  <% genreDetails.forEach(genre => { %>
+                      <% if (genre.game_title) { %>
+                          <li>
+                              <img src="<%= genre.game_image %>" alt="<%= genre.game_title %>" class="game-image">
+                              <a href="/games/<%= genre.game_id %>"><%= genre.game_title %></a>
+                          </li>
+                      <% } %>
+                  <% }); %>
+              </ul>
+          <% } else { %>
+              <p>No games available in this genre.</p>
+          <% } %>
+      </div>
+  </div>
+
+  <a href="/genres">Back to Genres</a>
+</div>
