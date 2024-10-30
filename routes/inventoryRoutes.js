@@ -22,9 +22,9 @@ router.get('/publishers/form', controllers.renderPublisherForm);
 router.get('/genres/form', controllers.renderGenreForm);
 
 // Routes for submitting forms
-router.post('/games/form', controllers.submitGameForm);
-router.post('/publishers/form', controllers.submitPublisherForm);
-router.post('/genres/form', controllers.submitGenreForm);
+router.post('/games/form', validators.validateGame, controllers.submitGameForm);
+router.post('/publishers/form', validators.validatePublisher, controllers.submitPublisherForm);
+router.post('/genres/form', validators.validateGenre, controllers.submitGenreForm);
 
 module.exports = router;
 
