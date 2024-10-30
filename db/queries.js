@@ -117,7 +117,7 @@ const updateGame = async (updateValues) => {
   const { id, title, release_date, publisher_id, genre_id, image } = updateValues;
   
   const query = `
-    UPDATE game 
+    UPDATE games 
     SET 
       title = $1, 
       release_date = $2, 
