@@ -239,3 +239,7 @@ export const submitGenreForm = async (req, res) => {
       return res.status(500).render('error', { message: 'Error processing the genre submission' });
   }
 };
+
+export const renderAddSection = (req, res) => {
+  res.render('add');
+};

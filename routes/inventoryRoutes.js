@@ -14,6 +14,7 @@ router.get('/games/search', controllers.renderFilteredGames);
 router.get('/games/:id', controllers.renderGameDetails);
 router.get('/publishers/:id', controllers.renderPublisherDetails);
 router.get('/genres/:id', controllers.renderGenreDetails);
+router.get('/add', controllers.renderAddSection);
 
 // Routes for rendering forms
 router.get('/games/form', controllers.renderGameForm);
