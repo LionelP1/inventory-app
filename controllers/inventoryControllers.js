@@ -1,8 +1,9 @@
-const queries = require('../queries/gameQueries');
+const queries = require('../db/queries');
 
-const allowedTables = ['games', 'publishers', 'orders'];
+const allowedTables = ['games', 'publishers', 'genres'];
 
-export const renderAllData = async (req, res) => {
+// RENDERING ALL DATA
+const renderAllData = async (req, res) => {
   const { tableName } = req.params;
 
   if (!allowedTables.includes(tableName)) {
@@ -18,8 +19,9 @@ export const renderAllData = async (req, res) => {
   }
 };
 
+
 // DELETING
-export const deleteGame = async (req, res) => {
+const deleteGame = async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -35,7 +37,7 @@ export const deleteGame = async (req, res) => {
   }
 };
 
-export const deletePublisher = async (req, res) => {
+const deletePublisher = async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -51,7 +53,7 @@ export const deletePublisher = async (req, res) => {
   }
 };
 
-export const deleteGenre = async (req, res) => {
+const deleteGenre = async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -67,9 +69,8 @@ export const deleteGenre = async (req, res) => {
   }
 };
 
-
-//RENDERING FILTERED GAMES
-export const renderFilteredGames = async (req, res) => {
+// RENDERING FILTERED GAMES
+const renderFilteredGames = async (req, res) => {
   const { gameTitle, publisherName, genreName } = req.query;
 
   try {
@@ -81,9 +82,8 @@ export const renderFilteredGames = async (req, res) => {
   }
 };
 
-
 // RENDERING DETAILS
-export const renderGameDetails = async (req, res) => {
+const renderGameDetails = async (req, res) => {
   try {
     const { id } = req.params;
     const gameDetails = await queries.getGameDetailsById(id);
@@ -99,7 +99,7 @@ export const renderGameDetails = async (req, res) => {
   }
 };
 
-export const renderPublisherDetails = async (req, res) => {
+const renderPublisherDetails = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -115,7 +115,7 @@ export const renderPublisherDetails = async (req, res) => {
   }
 };
 
-export const renderGenreDetails = async (req, res) => {
+const renderGenreDetails = async (req, res) => {
   try {
     const { id } = req.params;
     const genreDetails = await queries.getGenreDetailsById(id);
@@ -131,73 +131,73 @@ export const renderGenreDetails = async (req, res) => {
   }
 };
 
-
-// RENDERING FORMS
-export const renderGameForm = async (req, res) => {
-  const { id } = req.query.id;
+ // RENDERING FORMS
+const renderGameForm = async (req, res) => {
+  const { id } = req.query;
 
   try {
     let game;
-    if (id) { // For editing game instead of creating new game
+    if (id) { 
       game = await queries.getGameDetailsById(id);
       if (!game) {
         return res.status(404).render('error', { message: 'Game not found' });
       }
     }
-    res.render('gameForm', { game }); 
+    res.render('forms/gameForm', { game }); 
   } catch (error) {
     console.error('Error rendering game form:', error);
     res.status(500).render('error', { message: 'Error rendering game form' });
   }
 };
 
-export const renderPublisherForm = async (req, res) => {
-  const { id } = req.query.id;
+const renderPublisherForm = async (req, res) => {
+  const { id } = req.query;
 
   try {
     let publisher;
-    if (id) { // For editing publisher instead of creating new publisher
-      publisher = await queries.getPublisherDetailsById(id);
+    if (id) {
+      const publishers = await queries.getPublisherDetailsById(id);
+      publisher = publishers[0];
       if (!publisher) {
         return res.status(404).render('error', { message: 'Publisher not found' });
       }
     }
-    res.render('publisherForm', { publisher });
+    res.render('forms/publisherForm', { publisher });
   } catch (error) {
     console.error('Error rendering publisher form:', error);
     res.status(500).render('error', { message: 'Error rendering publisher form' });
   }
 };
 
-export const renderGenreForm = async (req, res) => {
+const renderGenreForm = async (req, res) => {
   const { id } = req.query.id;
 
   try {
     let genre;
     if (id) {
-      genre = await queries.getGenreDetailsById(id); // For editing publisher instead of creating new publisher
+      genre = await queries.getGenreDetailsById(id);
       if (!genre) {
         return res.status(404).render('error', { message: 'Genre not found' });
       }
     }
-    res.render('genreForm', { genre });
+    res.render('forms/genreForm', { genre });
   } catch (error) {
     console.error('Error rendering genre form:', error);
     res.status(500).render('error', { message: 'Error rendering genre form' });
   }
 };
 
-
 // SUBMITTING FORMS
-export const submitGameForm = async (req, res) => {
-  const { action, title, releaseDate, publisherId, genreId, image } = req.body;
-  const { id } = req.query.id;
+const submitGameForm = async (req, res) => {
+  const action = req.body.action || req.query.action;
+  const {title,  genre_id, publisher_id, release_date, image } = req.body;
 
   try {
       if (action === 'edit') {
-          await queries.updateGame({ id, title, releaseDate, publisherId, genreId, image });
+        const { id } = req.query;
+        await queries.updateGame({ id, title, release_date, publisher_id, genre_id, image });
       } else if (action === 'add') {
-          await queries.insertRow('games', ['title', 'releaseDate', 'publisherId', 'genreId', 'image'], [title, releaseDate, publisherId, genreId, image]);
+        await queries.insertRow('games', ['title', 'genre_id', 'publisher_id', 'release_date', 'image'], [title, genre_id, publisher_id, release_date, image]);
       }
       return res.redirect('/games');
   } catch (error) {
@@ -206,12 +206,13 @@ export const submitGameForm = async (req, res) => {
   }
 };
 
-export const submitPublisherForm = async (req, res) => {
-  const { action, name, image } = req.body;
-  const { id } = req.query.id;
-
+const submitPublisherForm = async (req, res) => {
+  const action = req.body.action || req.query.action;
+  const { name, image } = req.body;
+ 
   try {
     if (action === 'edit') {
+      const { id } = req.query;
       await queries.updatePublisher({ id, name, image });
     } else if (action === 'add') {
       await queries.insertRow('publishers', ['name', 'image'], [name, image]);
@@ -223,12 +224,13 @@ export const submitPublisherForm = async (req, res) => {
   }
 };
 
-export const submitGenreForm = async (req, res) => {
-  const { action, name, image } = req.body;
-  const { id } = req.query.id;
+const submitGenreForm = async (req, res) => {
+  const action = req.body.action || req.query.action;
+  const { name, image } = req.body;
 
   try {
       if (action === 'edit') {
+          const { id } = req.query;
           await queries.updateGenre({ id, name, image });
       } else if (action === 'add') {
           await queries.insertRow('genres', ['name', 'image'], [name, image]);
@@ -240,6 +242,25 @@ export const submitGenreForm = async (req, res) => {
   }
 };
 
-export const renderAddSection = (req, res) => {
+const renderAddSection = (req, res) => {
   res.render('add');
+};
+
+// EXPORTING MODULE
+module.exports = {
+  renderAllData,
+  deleteGame,
+  deletePublisher,
+  deleteGenre,
+  renderFilteredGames,
+  renderGameDetails,
+  renderPublisherDetails,
+  renderGenreDetails,
+  renderGameForm,
+  renderPublisherForm,
+  renderGenreForm,
+  submitGameForm,
+  submitPublisherForm,
+  submitGenreForm,
+  renderAddSection
 };

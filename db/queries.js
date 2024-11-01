@@ -43,7 +43,7 @@ const insertRow = async (tableName, columns, values) => {
 
 const getGamesByFilters = async (gameTitle, publisherName, genreName) => {
   let query = `
-    SELECT games.*, publishers.name AS publisher, genres.title AS genre
+    SELECT games.*, publishers.name AS publisher, genres.name AS genre
     FROM games
     JOIN publishers ON games.publisher_id = publishers.id
     JOIN genres ON games.genre_id = genres.id
@@ -77,7 +77,7 @@ const getGamesByFilters = async (gameTitle, publisherName, genreName) => {
 
 const getPublisherDetailsById = async (publisherId) => {
   const query = `
-    SELECT publishers.*, games.title AS game_title, games.image AS game_image
+    SELECT publishers.*, games.title AS game_title, games.image AS game_image, games.id AS game_id
     FROM publishers
     LEFT JOIN games ON publishers.id = games.publisher_id
     WHERE publishers.id = $1
@@ -89,20 +89,20 @@ const getPublisherDetailsById = async (publisherId) => {
 
 const getGenreDetailsById = async (genreId) => {
   const query = `
-    SELECT genres.*, games.title AS game_title, games.image AS game_image
+    SELECT genres.*, games.title AS game_title, games.image AS game_image, games.id AS game_id
     FROM genres
     LEFT JOIN games ON genres.id = games.genre_id
     WHERE genres.id = $1
   `;
   
   const { rows } = await pool.query(query, [genreId]);
-  return rows;
+  return rows[0];
 };
 
 const getGameDetailsById = async (gameId) => {
   const query = `
     SELECT 
-    games.*, genres.title AS genre_title, publishers.name AS publisher_name
+    games.*, genres.name AS genre_name, publishers.name AS publisher_name
     FROM games
     JOIN genres ON games.genre_id = genres.id
     JOIN publishers ON games.publisher_id = publishers.id
@@ -127,8 +127,8 @@ const updateGame = async (updateValues) => {
     WHERE id = $6
     RETURNING *`;
 
-  const { rows } = await pool.query(query, [title, release_date, publisher_id, genre_id, image, id]);
-  return rows[0];
+    const { rows } = await pool.query(query, [title, release_date, publisher_id, genre_id, image, id]);
+    return rows[0];
 };
 
 const updatePublisher = async (updateValues) => {

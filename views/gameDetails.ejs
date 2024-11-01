@@ -2,12 +2,13 @@
   <h2>Game Details</h2>
   <div class="game-detail">
       <h3><%= gameDetails.title %></h3>
-      <img src="<%= gameDetails.image %>" alt="<%= gameDetails.title %>" class="game-detail-image"> <!-- Displaying the game image -->
+      <img src="<%= gameDetails.image %>" alt="<%= gameDetails.title %>" class="game-detail-image">
       
-      <p><strong>Release Date:</strong> <%= new Date(gameDetails.release_date).toLocaleDateString() %></p> <!-- Displaying the release date -->
-      <p><strong>Publisher:</strong> <%= gameDetails.publisher_name %></p> <!-- Displaying the publisher name -->
-      <p><strong>Genre:</strong> <%= gameDetails.genre_title %></p> <!-- Displaying the genre name -->
+      <p><strong>Release Date:</strong> <%= new Date(gameDetails.release_date).toLocaleDateString() %></p> 
+      <p><strong>Publisher:</strong> <%= gameDetails.publisher_name %></p>
+      <p><strong>Genre:</strong> <%= gameDetails.genre_title %></p> 
   </div>
 
   <a href="/games">Back to Games</a>
+  <a href="/games/form?action=edit&id=<%= gameDetails.id %>">Edit Game</a>
 </div>

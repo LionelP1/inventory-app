@@ -1,27 +1,28 @@
 <div class="publisher-detail-container">
-  <h2>Publisher Details</h2>
-  <div class="publisher-detail">
-      <h3><%= publisherDetails[0].name %></h3>
-      <img src="<%= publisherDetails[0].imageUrl %>" alt="<%= publisherDetails[0].name %>" class="publisher-detail-image">
-      
-      <h4>Games Published:</h4>
-      <div class="games-list">
-          <% if (publisherDetails[0].game_title) { %>
-              <ul>
-                  <% publisherDetails.forEach(publisher => { %>
-                      <% if (publisher.game_title) { %>
-                          <li>
-                              <img src="<%= publisher.game_image %>" alt="<%= publisher.game_title %>" class="game-image">
-                              <a href="/games/<%= publisher.game_id %>"><%= publisher.game_title %></a>
-                          </li>
-                      <% } %>
-                  <% }); %>
-              </ul>
-          <% } else { %>
-              <p>No games published by this publisher.</p>
-          <% } %>
-      </div>
+    <h2>Publisher Details</h2>
+    <div class="publisher-detail">
+        <h3><%= publisherDetails[0].name %></h3>
+        <img src="<%= publisherDetails[0].image %>" alt="<%= publisherDetails[0].name %>" class="publisher-detail-image">
+        
+        <h4>Games Published:</h4>
+        <div class="games-list">
+            <% if (publisherDetails[0].game_title) { %>
+                <ul>
+                    <% publisherDetails.forEach(publisher => { %>
+                        <% if (publisher.game_title) { %>
+                            <li>
+                                <img src="<%= publisher.game_image %>" alt="<%= publisher.game_title %>" class="game-image">
+                                <a href="/games/<%= publisher.game_id %>"><%= publisher.game_title %></a>
+                            </li>
+                        <% } %>
+                    <% }); %>
+                </ul>
+            <% } else { %>
+                <p>No games published by this publisher.</p>
+            <% } %>
+        </div>
+    </div>
+  
+    <a href="/publishers">Back to Publishers</a>
+    <a href="/publishers/form?action=edit&id=<%= publisherDetails[0].id %>">Edit Publisher</a>
   </div>
-
-  <a href="/publishers">Back to Publishers</a>
-</div>
