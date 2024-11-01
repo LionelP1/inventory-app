@@ -76,7 +76,7 @@ const renderFilteredGames = async (req, res) => {
 
   try {
     const games = await queries.getGamesByFilters(gameTitle, publisherName, genreName);
-    return renderHelpers.renderWithLayout(res, 'Filtered Games', 'gamePage', { games, gameTitle, publisherName, genreName });
+    return renderHelpers.renderWithLayout(res, 'Games', 'gamePage', { games, gameTitle, publisherName, genreName });
   } catch (error) {
     console.error(error);
     return renderHelpers.renderError(res, 'Error retrieving games')
@@ -203,8 +203,8 @@ const submitGameForm = async (req, res) => {
       }
       return res.redirect('/games');
   } catch (error) {
-      console.error(error);
-      return res.status(500).render('error', { message: 'Error processing the game submission' });
+      console.error('Error rendering genre form:', error);
+      return renderHelpers.renderError(res, 'Error processing the game submission');
   }
 };
 
@@ -222,7 +222,7 @@ const submitPublisherForm = async (req, res) => {
     return res.redirect('/publishers');
   } catch (error) {
     console.error('Error processing the publisher submission:', error);
-    return res.status(500).render('error', { message: 'Error processing the publisher submission' });
+    return renderHelpers.renderError(res, 'Error processing the publisher submission');
   }
 };
 
@@ -240,12 +240,12 @@ const submitGenreForm = async (req, res) => {
       return res.redirect('/genres');
   } catch (error) {
       console.error(error);
-      return res.status(500).render('error', { message: 'Error processing the genre submission' });
+      return renderHelpers.renderError(res, 'Error processing the genre submission');
   }
 };
 
 const renderAddSection = (req, res) => {
-  res.render('add');
+  return renderHelpers.renderWithLayout(res, 'Add New', 'add');
 };
 
 // EXPORTING MODULE
