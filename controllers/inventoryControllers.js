@@ -90,13 +90,13 @@ const renderGameDetails = async (req, res) => {
     const gameDetails = await queries.getGameDetailsById(id);
 
     if (gameDetails) {
-      res.render('gameDetails', { gameDetails });
+      return renderHelpers.renderWithLayout(res, 'Game Details', 'gameDetails', { gameDetails });
     } else {
-      res.status(404).render('error', { message: 'Game not found' });
+      return renderHelpers.renderError(res, 'Game not found');
     }
   } catch (error) {
     console.error(error);
-    res.status(500).render('error', { message: 'Error retrieving game details' });
+    return renderHelpers.renderError(res, 'Error retrieving game details');
   }
 };
 
@@ -106,13 +106,13 @@ const renderPublisherDetails = async (req, res) => {
 
     const publisherDetails = await queries.getPublisherDetailsById(id);
     if (publisherDetails.length > 0) {
-      res.render('publisherDetails', { publisherDetails })
+      return renderHelpers.renderWithLayout(res, 'Game Details', 'publisherDetails', { publisherDetails });
     } else {
-      res.status(404).json({ message: 'Publisher not found' });
+      return renderHelpers.renderError(res, 'Publisher not found');
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error retrieving publisher details' });
+    return renderHelpers.renderError(res, 'Error retrieving publisher details');
   }
 };
 
@@ -122,13 +122,13 @@ const renderGenreDetails = async (req, res) => {
     const genreDetails = await queries.getGenreDetailsById(id);
 
     if (genreDetails.length > 0) {
-      res.render('genreDetails', { genreDetails });
+      return renderHelpers.renderWithLayout(res, 'Genre Details', 'genreDetails', { genreDetails });
     } else {
-      res.status(404).render('error', { message: 'Genre not found' });
+      return renderHelpers.renderError(res, 'Genre not found');
     }
   } catch (error) {
     console.error(error);
-    res.status(500).render('error', { message: 'Error retrieving genre details' });
+    return renderHelpers.renderError(res, 'Error retrieving genre details');
   }
 };
 
@@ -141,13 +141,13 @@ const renderGameForm = async (req, res) => {
     if (id) { 
       game = await queries.getGameDetailsById(id);
       if (!game) {
-        return res.status(404).render('error', { message: 'Game not found' });
+        return renderHelpers.renderError(res, 'Game not found');
       }
     }
-    res.render('forms/gameForm', { game }); 
+    return renderHelpers.renderWithLayout(res, 'Game Form', 'forms/gameForm', { game });
   } catch (error) {
     console.error('Error rendering game form:', error);
-    res.status(500).render('error', { message: 'Error rendering game form' });
+    return renderHelpers.renderError(res, 'Error rendering game form');
   }
 };
 
@@ -160,13 +160,13 @@ const renderPublisherForm = async (req, res) => {
       const publishers = await queries.getPublisherDetailsById(id);
       publisher = publishers[0];
       if (!publisher) {
-        return res.status(404).render('error', { message: 'Publisher not found' });
+        return renderHelpers.renderError(res, 'Publisher not found');
       }
     }
-    res.render('forms/publisherForm', { publisher });
+    return renderHelpers.renderWithLayout(res, 'Game Form', 'forms/publisherForm', { publisher });
   } catch (error) {
     console.error('Error rendering publisher form:', error);
-    res.status(500).render('error', { message: 'Error rendering publisher form' });
+    return renderHelpers.renderError(res, 'Error rendering publisher form');
   }
 };
 
@@ -179,13 +179,13 @@ const renderGenreForm = async (req, res) => {
       const genres = await queries.getGenreDetailsById(id);
       genre = genres[0];
       if (!genre) {
-        return res.status(404).render('error', { message: 'Genre not found' });
+        return renderHelpers.renderError(res, 'Genre not found');
       }
     }
-    res.render('forms/genreForm', { genre });
+    return renderHelpers.renderWithLayout(res, 'Game Form', 'forms/genreForm', { genre });
   } catch (error) {
     console.error('Error rendering genre form:', error);
-    res.status(500).render('error', { message: 'Error rendering genre form' });
+    return renderHelpers.renderError(res, 'Error rendering genre form');
   }
 };
 
