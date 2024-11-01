@@ -96,7 +96,7 @@ const getGenreDetailsById = async (genreId) => {
   `;
   
   const { rows } = await pool.query(query, [genreId]);
-  return rows[0];
+  return rows;
 };
 
 const getGameDetailsById = async (gameId) => {

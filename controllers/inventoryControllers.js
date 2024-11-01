@@ -170,12 +170,13 @@ const renderPublisherForm = async (req, res) => {
 };
 
 const renderGenreForm = async (req, res) => {
-  const { id } = req.query.id;
+  const { id } = req.query;
 
   try {
     let genre;
     if (id) {
-      genre = await queries.getGenreDetailsById(id);
+      const genres = await queries.getGenreDetailsById(id);
+      genre = genres[0];
       if (!genre) {
         return res.status(404).render('error', { message: 'Genre not found' });
       }
