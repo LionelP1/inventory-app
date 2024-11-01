@@ -2,6 +2,7 @@
     <h2>Publisher Details</h2>
     <div class="publisher-detail">
         <h3><%= publisherDetails[0].name %></h3>
+        <p><strong>Id:</strong><%= publisherDetails[0].id %></p>
         <img src="<%= publisherDetails[0].image %>" alt="<%= publisherDetails[0].name %>" class="publisher-detail-image">
         
         <h4>Games Published:</h4>
@@ -25,4 +26,7 @@
   
     <a href="/publishers">Back to Publishers</a>
     <a href="/publishers/form?action=edit&id=<%= publisherDetails[0].id %>">Edit Publisher</a>
+    <form action="/publishers/<%= publisherDetails[0].id %>?_method=DELETE" method="POST">
+        <button type="submit">Delete Publisher</button>
+    </form>
   </div>

@@ -1,7 +1,8 @@
 <div class="genre-detail-container">
   <h2>Genre Details</h2>
   <div class="genre-detail">
-      <h3><%= genreDetails[0].name %></h3>
+      <h3><%= genreDetails[0].name %></h3>      
+      <p><strong>Id:</strong><%= genreDetails[0].id %></p>
       <img src="<%= genreDetails[0].image %>" alt="<%= genreDetails[0].name %>" class="genre-detail-image"> <!-- Assuming there's an image for the genre -->
       
       <h4>Games in this Genre:</h4>
@@ -25,4 +26,7 @@
 
   <a href="/genres">Back to Genres</a>
   <a href="/genres/form?action=edit&id=<%= genreDetails[0].id %>">Edit Genre</a>
+  <form action="/genres/<%= genreDetails[0].id %>?_method=DELETE" method="POST">
+    <button type="submit">Delete Genre</button>
+  </form>
 </div>

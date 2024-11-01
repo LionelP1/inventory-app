@@ -28,13 +28,13 @@ const deleteGame = async (req, res) => {
   try {
     const deletedRow = await queries.deleteGame(id);
     if (deletedRow) {
-      res.status(200).json(deletedRow);
+      return res.redirect('/games');
     } else {
-      res.status(404).json({ message: 'Game not found' });
+      return renderHelpers.renderError(res, 'Game not found');
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error deleting game' });
+    return renderHelpers.renderError(res, 'Error deleting game');
   }
 };
 
@@ -44,13 +44,13 @@ const deletePublisher = async (req, res) => {
   try {
     const deletedRow = await queries.deletePublisher(id);
     if (deletedRow) {
-      res.status(200).json(deletedRow);
+      return res.redirect('/publishers');
     } else {
-      res.status(404).json({ message: 'Publisher not found' });
+      return renderHelpers.renderError(res, 'Publisher not found');
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error deleting publisher' });
+    return renderHelpers.renderError(res, 'Error deleting publisher');
   }
 };
 
@@ -60,13 +60,13 @@ const deleteGenre = async (req, res) => {
   try {
     const deletedRow = await queries.deleteGenre(id);
     if (deletedRow) {
-      res.status(200).json(deletedRow);
+      return res.redirect('/genres');
     } else {
-      res.status(404).json({ message: 'Genre not found' });
+      return renderHelpers.renderError(res, 'Genre not found');
     }
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error deleting genre' });
+    return renderHelpers.renderError(res, 'Error deleting genre');
   }
 };
 
