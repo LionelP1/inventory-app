@@ -63,7 +63,7 @@ const getGamesByFilters = async (gameTitle, publisherName, genreName) => {
   }
 
   if (genreName) {
-    conditions.push(`genres.title ILIKE $${conditions.length + 1}`);
+    conditions.push(`genres.name ILIKE $${conditions.length + 1}`);
     values.push(`%${genreName}%`);
   }
 

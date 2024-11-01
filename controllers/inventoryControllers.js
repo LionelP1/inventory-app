@@ -8,7 +8,7 @@ const renderAllData = async (req, res) => {
   const { tableName } = req.params;
 
   if (!allowedTables.includes(tableName)) {
-    return renderHelpers.renderError(res, 'Error', 'error', { message: 'Invalid table name' });
+    return renderHelpers.renderError(res, 'Invalid table name');
   }
 
   try {
@@ -16,7 +16,7 @@ const renderAllData = async (req, res) => {
     return renderHelpers.renderWithLayout(res, `All ${tableName}`, tableName, { rows });
   } catch (error) {
     console.error(error);
-    return renderHelpers.renderError(res, 'Error', 'error', { message: 'Error retrieving data' });
+    return renderHelpers.renderError(res, 'Error retrieving games');
   }
 };
 
@@ -76,10 +76,10 @@ const renderFilteredGames = async (req, res) => {
 
   try {
     const games = await queries.getGamesByFilters(gameTitle, publisherName, genreName);
-    res.render('gamePage', { games, gameTitle, publisherName, genreName });
+    return renderHelpers.renderWithLayout(res, 'Filtered Games', 'gamePage', { games, gameTitle, publisherName, genreName });
   } catch (error) {
     console.error(error);
-    res.status(500).render('error', { message: 'Error retrieving games' });
+    return renderHelpers.renderError(res, 'Error retrieving games')
   }
 };
 
