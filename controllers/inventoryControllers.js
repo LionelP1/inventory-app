@@ -1,4 +1,5 @@
 const queries = require('../db/queries');
+const renderHelpers = require('./renderHelper');
 
 const allowedTables = ['games', 'publishers', 'genres'];
 
@@ -7,15 +8,15 @@ const renderAllData = async (req, res) => {
   const { tableName } = req.params;
 
   if (!allowedTables.includes(tableName)) {
-    return res.status(400).json({ message: 'Invalid table name' });
+    return renderHelpers.renderError(res, 'Error', 'error', { message: 'Invalid table name' });
   }
 
   try {
     const rows = await queries.getAllRows(tableName);
-    res.render(tableName, { rows });
+    return renderHelpers.renderWithLayout(res, `All ${tableName}`, tableName, { rows });
   } catch (error) {
     console.error(error);
-    res.status(500).render('error', { message: 'Error retrieving data' });
+    return renderHelpers.renderError(res, 'Error', 'error', { message: 'Error retrieving data' });
   }
 };
 
