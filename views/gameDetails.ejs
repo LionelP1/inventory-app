@@ -1,8 +1,8 @@
-<div class="game-detail-container">
+<div class="details-container">
   <h2>Game Details</h2>
-  <div class="game-detail">
+  <div class="details-section">
       <h3><%= gameDetails.title %></h3>
-      <img src="<%= gameDetails.image %>" alt="<%= gameDetails.title %>" class="game-detail-image">
+      <img src="<%= gameDetails.image %>" alt="<%= gameDetails.title %>" class="details-image">
       
       <p><strong>Id:</strong><%= gameDetails.id %></p>
       <p><strong>Release Date:</strong> <%= new Date(gameDetails.release_date).toLocaleDateString() %></p> 
@@ -10,9 +10,11 @@
       <p><strong>Genre:</strong> <%= gameDetails.genre_name %></p> 
   </div>
 
-  <a href="/games">Back to Games</a>
-  <a href="/games/form?action=edit&id=<%= gameDetails.id %>">Edit Game</a>
-  <form action="/games/<%= gameDetails.id %>?_method=DELETE" method="POST">
-    <button type="submit">Delete Game</button>
-  </form>
+  <div class="details-links">
+    <a href="/games" class="back-link">Back to Games</a>
+    <a href="/games/form?action=edit&id=<%= gameDetails.id %>" class="edit-link">Edit Game</a>
+    <form action="/games/<%= gameDetails.id %>?_method=DELETE" method="POST">
+      <button type="submit" class="delete-button">Delete Game</button>
+    </form>
+  </div>
 </div>
