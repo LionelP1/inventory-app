@@ -1,15 +1,15 @@
-<div class="games-container">
-  <h2>List of Games</h2>
-  <div class="games-gallery">
+<div class="item-container">
+  <h1>List of Games</h1>
+  <div class="item-gallery">
       <% games.forEach(game => { %>
-          <div class="game-item">
+          <div class="item">
               <a href="/games/<%= game.id %>">
-                  <img src="<%= game.image %>" alt="<%= game.title %>" class="game-image">
-                  <p class="game-title"><%= game.title %></p>
+                  <img src="<%= game.image %>" alt="<%= game.title %>" class="item-image">
+                  <p class="item-title"><%= game.title %></p>
               </a>
           </div>
       <% }); %>
   </div>
 
-  <a href="/games/form?action=add" class="add-game-link">Add New Game</a>
+  <a href="/games/form?action=add" class="add-item-link">Add New Game</a>
 </div>
