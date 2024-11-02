@@ -2,18 +2,17 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 15px;
-  margin-top: 20px;
-  min-height: 75vh;
+  gap: 25px;
+  padding-top: 22vh;
+  flex-wrap: wrap;
 }
 
 .option-button {
-  display: inline-block;
-  padding: 10px 20px;
+  padding: 15px 25px;
   color: #fff;
   background-color: #007bff;
   text-decoration: none;
-  font-size: 30px;
+  font-size: 36px;
   border-radius: 5px;
   text-align: center;
 }
