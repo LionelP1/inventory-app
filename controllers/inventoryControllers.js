@@ -15,7 +15,6 @@ const renderAllData = async (req, res) => {
     const rows = await queries.getAllRows(tableName);
     return renderHelpers.renderWithLayout(res, `All ${tableName}`, tableName, { rows });
   } catch (error) {
-    console.error(error);
     return renderHelpers.renderError(res, 'Error retrieving games');
   }
 };
@@ -33,7 +32,6 @@ const deleteGame = async (req, res) => {
       return renderHelpers.renderError(res, 'Game not found');
     }
   } catch (error) {
-    console.error(error);
     return renderHelpers.renderError(res, 'Error deleting game');
   }
 };
@@ -49,7 +47,6 @@ const deletePublisher = async (req, res) => {
       return renderHelpers.renderError(res, 'Publisher not found');
     }
   } catch (error) {
-    console.error(error);
     return renderHelpers.renderError(res, 'Error deleting publisher');
   }
 };
@@ -65,7 +62,6 @@ const deleteGenre = async (req, res) => {
       return renderHelpers.renderError(res, 'Genre not found');
     }
   } catch (error) {
-    console.error(error);
     return renderHelpers.renderError(res, 'Error deleting genre');
   }
 };
@@ -78,7 +74,6 @@ const renderFilteredGames = async (req, res) => {
     const games = await queries.getGamesByFilters(gameTitle, publisherName, genreName);
     return renderHelpers.renderWithLayout(res, 'Games', 'gamePage', { games, gameTitle, publisherName, genreName });
   } catch (error) {
-    console.error(error);
     return renderHelpers.renderError(res, 'Error retrieving games')
   }
 };
@@ -95,7 +90,6 @@ const renderGameDetails = async (req, res) => {
       return renderHelpers.renderError(res, 'Game not found');
     }
   } catch (error) {
-    console.error(error);
     return renderHelpers.renderError(res, 'Error retrieving game details');
   }
 };
@@ -111,7 +105,6 @@ const renderPublisherDetails = async (req, res) => {
       return renderHelpers.renderError(res, 'Publisher not found');
     }
   } catch (error) {
-    console.error(error);
     return renderHelpers.renderError(res, 'Error retrieving publisher details');
   }
 };
@@ -127,7 +120,6 @@ const renderGenreDetails = async (req, res) => {
       return renderHelpers.renderError(res, 'Genre not found');
     }
   } catch (error) {
-    console.error(error);
     return renderHelpers.renderError(res, 'Error retrieving genre details');
   }
 };
@@ -146,7 +138,6 @@ const renderGameForm = async (req, res) => {
     }
     return renderHelpers.renderWithLayout(res, 'Game Form', 'forms/gameForm', { game });
   } catch (error) {
-    console.error('Error rendering game form:', error);
     return renderHelpers.renderError(res, 'Error rendering game form');
   }
 };
@@ -165,7 +156,6 @@ const renderPublisherForm = async (req, res) => {
     }
     return renderHelpers.renderWithLayout(res, 'Game Form', 'forms/publisherForm', { publisher });
   } catch (error) {
-    console.error('Error rendering publisher form:', error);
     return renderHelpers.renderError(res, 'Error rendering publisher form');
   }
 };
@@ -184,7 +174,6 @@ const renderGenreForm = async (req, res) => {
     }
     return renderHelpers.renderWithLayout(res, 'Game Form', 'forms/genreForm', { genre });
   } catch (error) {
-    console.error('Error rendering genre form:', error);
     return renderHelpers.renderError(res, 'Error rendering genre form');
   }
 };
@@ -203,7 +192,6 @@ const submitGameForm = async (req, res) => {
       }
       return res.redirect('/games');
   } catch (error) {
-      console.error('Error rendering genre form:', error);
       return renderHelpers.renderError(res, 'Error processing the game submission');
   }
 };
@@ -221,7 +209,6 @@ const submitPublisherForm = async (req, res) => {
     }
     return res.redirect('/publishers');
   } catch (error) {
-    console.error('Error processing the publisher submission:', error);
     return renderHelpers.renderError(res, 'Error processing the publisher submission');
   }
 };
@@ -239,7 +226,6 @@ const submitGenreForm = async (req, res) => {
       }
       return res.redirect('/genres');
   } catch (error) {
-      console.error(error);
       return renderHelpers.renderError(res, 'Error processing the genre submission');
   }
 };
