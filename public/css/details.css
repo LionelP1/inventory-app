@@ -1,0 +1,114 @@
+.details-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  align-items: center;
+  text-align: center;
+}
+
+.details-container h2 {
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+}
+
+.details-section {
+  text-align: center;
+}
+
+.details-section h3 {
+  font-size: 20px;
+  color: #555;
+}
+
+.details-section p {
+  font-size: 16px;
+  color: #666;
+  margin: 10px 0;
+}
+
+.details-image {
+  width: 100%;
+  max-width: 300px;
+  height: auto;
+  margin: 15px 0;
+  border-radius: 5px;
+}
+
+.details-links {
+  display: flex;
+}
+
+.games-list ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+
+
+.game-image {
+  width: 120px;
+  height: auto;
+  border-radius: 3px;
+}
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 150px;
+  text-align: center;
+}
+
+.game-image-wrapper {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background-color: #f1f1f1;
+}
+
+.back-link,
+.edit-link,
+.delete-button {
+  display: inline-block;
+  margin: 15px;
+  padding: 10px 15px;
+  font-size: 16px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.back-link {
+  background-color: #6c757d;
+}
+
+.edit-link {
+  background-color: #28a745;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  border: none;
+  cursor: pointer;
+}
+
+.back-link:hover {
+  background-color: #5a6268;
+}
+
+.edit-link:hover {
+  background-color: #218838;
+}
+
+.delete-button:hover {
+  background-color: #c82333;
+}

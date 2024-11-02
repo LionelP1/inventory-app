@@ -2,6 +2,8 @@
 @import url("./searchBar.css");
 @import url("./add.css");
 @import url("./form.css");
+@import url("./details.css");
+
 
 body {
     font-family: Arial, sans-serif;
