@@ -1,15 +1,15 @@
-<div class="publishers-container">
+<div class="item-container">
   <h2>List of Publishers</h2>
-  <div class="publishers-gallery">
+  <div class="item-gallery">
       <% rows.forEach(publisher => { %>
-          <div class="publisher-item">
+          <div class="item">
               <a href="/publishers/<%= publisher.id %>">
                   <img src="<%= publisher.image %>" alt="<%= publisher.name %>" class="publisher-image">
-                  <p class="publisher-name"><%= publisher.name %></p>
+                  <p class="item-title"><%= publisher.name %></p>
               </a>
           </div>
       <% }); %>
   </div>
 
-  <a href="/publishers/form?action=add">Add New Publisher</a>
+  <a href="/publishers/form?action=add" class="add-item-link">Add New Publisher</a>
 </div>

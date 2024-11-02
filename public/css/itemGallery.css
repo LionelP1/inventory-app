@@ -6,9 +6,9 @@
   text-align: center;
 }
 
-.item-container h2 {
-  font-size: 28px;
-  color: #333;
+.item-container h1 {
+  font-size: 32px;
+  color: #000000;
   margin-bottom: 20px;
 }
 
@@ -27,8 +27,7 @@
 }
 
 .item-title {
-  font-size: 18px;
-  color: #555;
+  font-size: 22px;
   margin-top: 10px;
   text-align: center;
 }
