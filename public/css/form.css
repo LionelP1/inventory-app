@@ -1,0 +1,42 @@
+.form {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.form label {
+  display: block;
+  font-weight: bold;
+  margin-top: 15px;
+  color: black;
+}
+
+.form input[type="text"],
+.form input[type="date"],
+.form input[type="number"],
+.form input[type="url"] {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.form button {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 4px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.form button:hover {
+  background-color: #0056b3;
+}

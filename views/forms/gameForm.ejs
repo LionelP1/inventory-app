@@ -1,4 +1,4 @@
-<form action="/games/form<%= game ? `?action=edit&id=${game.id}` : '?action=add' %>" method="POST">
+<form action="/games/form<%= game ? `?action=edit&id=${game.id}` : '?action=add' %>" method="POST" class="form">
     <label for="title">Title:</label>
     <input type="text" id="title" name="title" value="<%= game ? game.title : '' %>" required>
   
