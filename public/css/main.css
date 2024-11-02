@@ -4,6 +4,7 @@
 @import url("./form.css");
 @import url("./details.css");
 @import url("./itemGallery.css");
+@import url("./error.css");
 
 body {
     font-family: Arial, sans-serif;
