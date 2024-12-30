@@ -21,7 +21,6 @@ const renderAllData = async (req, res) => {
   }
 };
 
-
 // DELETING
 const deleteGame = async (req, res) => {
   const { id } = req.params;
@@ -192,18 +191,45 @@ const renderGenreForm = async (req, res) => {
 // SUBMITTING FORMS
 const submitGameForm = async (req, res) => {
   const action = req.body.action || req.query.action;
-  const {title,  genre_id, publisher_id, release_date, image } = req.body;
+  const { title, genre_id, publisher_id, release_date, image } = req.body;
+
+  const genreId = parseInt(genre_id, 10);
+  const publisherId = parseInt(publisher_id, 10);
+
+  const genreExists = await queries.doesGenreIdExist(genreId);
+  if (!genreExists) {
+    return renderHelpers.renderError(res, 'Invalid genre_id');
+  }
+
+  const publisherExists = await queries.doesPublisherIdExist(publisherId);
+  if (!publisherExists) {
+    return renderHelpers.renderError(res, 'Invalid publisher_id');
+  }
+
+  const parsedReleaseDate = new Date(release_date);
 
   try {
-      if (action === 'edit') {
-        const { id } = req.query;
-        await queries.updateGame({ id, title, release_date, publisher_id, genre_id, image });
-      } else if (action === 'add') {
-        await queries.insertRow('games', ['title', 'genre_id', 'publisher_id', 'release_date', 'image'], [title, genre_id, publisher_id, release_date, image]);
-      }
-      return res.redirect('/games');
+    if (action === 'edit') {
+      const { id } = req.query;
+      await queries.updateGame({
+        id,
+        title,
+        release_date: parsedReleaseDate,
+        publisher_id: publisherId,
+        genre_id: genreId,
+        image
+      });
+    } else if (action === 'add') {
+      await queries.insertRow(
+        'games',
+        ['title', 'genre_id', 'publisher_id', 'release_date', 'image'],
+        [title, genreId, publisherId, parsedReleaseDate, image]
+      );
+    }
+    return res.redirect('/games');
   } catch (error) {
-      return renderHelpers.renderError(res, 'Error processing the game submission');
+    console.error('Error processing the game submission', error);
+    return renderHelpers.renderError(res, 'Error processing the game submission');
   }
 };
 
@@ -246,6 +272,8 @@ const submitGenreForm = async (req, res) => {
 const renderAddSection = (req, res) => {
   return renderHelpers.renderWithLayout(res, 'Add New', 'add');
 };
+
+
 
 // EXPORTING MODULE
 module.exports = {

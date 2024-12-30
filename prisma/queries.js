@@ -3,7 +3,7 @@ const prisma = new PrismaClient();
 
 const getAllRows = async (tableName) => {
   const query = `SELECT * FROM ${tableName}`;
-  const result = await prisma.$queryRaw(query);
+  const result = await prisma.$queryRawUnsafe(query);
   return result;
 };
 
@@ -37,7 +37,7 @@ const insertRow = async (tableName, columns, values) => {
   const columnList = columns.join(`, `);
   const placeholders = columns.map((_, index) => `$${index + 1}`).join(`, `);
   const query = `INSERT INTO ${tableName} (${columnList}) VALUES (${placeholders})`;
-  await prisma.$queryRaw(query, ...values);
+  await prisma.$queryRawUnsafe(query, ...values);
 };
 
 const getGamesByFilters = async (gameTitle, publisherName, genreName) => {
@@ -83,7 +83,7 @@ const getPublisherDetailsById = async (publisherId) => {
     WHERE publishers.id = $1
   `;
   
-  const result = await prisma.$queryRawUnsafe(query, publisherId);
+  const result = await prisma.$queryRaw(query, publisherId);
   return result;
 };
 
@@ -161,6 +161,24 @@ const updateGenre = async (updateValues) => {
   return result[0];
 };
 
+const doesGenreIdExist = async (genreId) => {
+  const query = `
+    SELECT 1 FROM genres WHERE id = $1
+  `;
+  
+  const result = await prisma.$queryRawUnsafe(query, genreId);
+  return result.length > 0;
+};
+
+const doesPublisherIdExist = async (publisherId) => {
+  const query = `
+    SELECT 1 FROM publishers WHERE id = $1
+  `;
+  
+  const result = await prisma.$queryRawUnsafe(query, publisherId);
+  return result.length > 0;
+};
+
 module.exports = {
   getAllRows,
   insertRow,
@@ -174,4 +192,6 @@ module.exports = {
   updateGame,
   updatePublisher,
   updateGenre,
+  doesGenreIdExist,
+  doesPublisherIdExist,
 };

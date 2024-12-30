@@ -10,7 +10,7 @@ datasource db {
 model Game {
   id          Int       @id @default(autoincrement())
   title       String
-  releaseDate DateTime
+  release_date DateTime
   image       String
   genre_id     Int
   publisher_id  Int
