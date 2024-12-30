@@ -103,22 +103,6 @@ const renderGameDetails = async (req, res) => {
   }
 };
 
-// const renderGameDetails = async (req, res) => {
-//   try {
-//     const { id } = req.params;
-//     const gameDetails = await queries.getGameDetailsById(id);
-
-//     if (gameDetails) {
-//       return renderHelpers.renderWithLayout(res, 'Game Details', 'gameDetails', { gameDetails });
-//     } else {
-//       return renderHelpers.renderError(res, 'Game not found');
-//     }
-//   } catch (error) {
-//     console.error('Error retrieving game details', error); 
-//     return renderHelpers.renderError(res, 'Error retrieving game details');
-//   }
-// };
-
 const renderPublisherDetails = async (req, res) => {
   try {
     const { id } = req.params;
