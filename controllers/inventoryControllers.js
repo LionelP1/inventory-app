@@ -1,4 +1,3 @@
-// const queries = require('../db/queries');
 const queries = require('../prisma/queries');
 const renderHelpers = require('./renderHelper');
 
@@ -91,38 +90,6 @@ const deleteGenre = async (req, res) => {
     return renderHelpers.renderError(res, 'Error deleting genre');
   }
 };
-
-// const deletePublisher = async (req, res) => {
-//   const { id } = req.params;
-
-//   try {
-//     const deletedRow = await queries.deletePublisher(id);
-//     if (deletedRow) {
-//       return res.redirect('/publishers');
-//     } else {
-//       return renderHelpers.renderError(res, 'Publisher not found');
-//     }
-//   } catch (error) {
-//     console.error("Error deleting publisher:", error); 
-//     return renderHelpers.renderError(res, 'Error deleting publisher');
-//   }
-// };
-
-// const deleteGenre = async (req, res) => {
-//   const { id } = req.params;
-
-//   try {
-//     const deletedRow = await queries.deleteGenre(id);
-//     if (deletedRow) {
-//       return res.redirect('/genres');
-//     } else {
-//       return renderHelpers.renderError(res, 'Genre not found');
-//     }
-//   } catch (error) {
-//     console.error("Error deleting genre:", error); 
-//     return renderHelpers.renderError(res, 'Error deleting genre');
-//   }
-// };
 
 // RENDERING FILTERED GAMES
 const renderFilteredGames = async (req, res) => {
