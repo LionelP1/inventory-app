@@ -87,7 +87,10 @@ const renderFilteredGames = async (req, res) => {
 const renderGameDetails = async (req, res) => {
   try {
     const { id } = req.params;
-    const gameDetails = await queries.getGameDetailsById(id);
+
+    const gameId = parseInt(id, 10);
+
+    const gameDetails = await queries.getGameDetailsById(gameId);
 
     if (gameDetails) {
       return renderHelpers.renderWithLayout(res, 'Game Details', 'gameDetails', { gameDetails });
@@ -100,11 +103,29 @@ const renderGameDetails = async (req, res) => {
   }
 };
 
+// const renderGameDetails = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     const gameDetails = await queries.getGameDetailsById(id);
+
+//     if (gameDetails) {
+//       return renderHelpers.renderWithLayout(res, 'Game Details', 'gameDetails', { gameDetails });
+//     } else {
+//       return renderHelpers.renderError(res, 'Game not found');
+//     }
+//   } catch (error) {
+//     console.error('Error retrieving game details', error); 
+//     return renderHelpers.renderError(res, 'Error retrieving game details');
+//   }
+// };
+
 const renderPublisherDetails = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const publisherDetails = await queries.getPublisherDetailsById(id);
+    const publisherId = parseInt(id, 10);
+
+    const publisherDetails = await queries.getPublisherDetailsById(publisherId);
     if (publisherDetails.length > 0) {
       return renderHelpers.renderWithLayout(res, 'Game Details', 'publisherDetails', { publisherDetails });
     } else {
@@ -119,7 +140,10 @@ const renderPublisherDetails = async (req, res) => {
 const renderGenreDetails = async (req, res) => {
   try {
     const { id } = req.params;
-    const genreDetails = await queries.getGenreDetailsById(id);
+
+    const genreId = parseInt(id, 10);
+
+    const genreDetails = await queries.getGenreDetailsById(genreId);
 
     if (genreDetails.length > 0) {
       return renderHelpers.renderWithLayout(res, 'Genre Details', 'genreDetails', { genreDetails });
@@ -127,6 +151,7 @@ const renderGenreDetails = async (req, res) => {
       return renderHelpers.renderError(res, 'Genre not found');
     }
   } catch (error) {
+    console.error('Error retrieving genre details', error); 
     return renderHelpers.renderError(res, 'Error retrieving genre details');
   }
 };

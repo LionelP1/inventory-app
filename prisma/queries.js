@@ -83,7 +83,7 @@ const getPublisherDetailsById = async (publisherId) => {
     WHERE publishers.id = $1
   `;
   
-  const result = await prisma.$queryRaw(query, publisherId);
+  const result = await prisma.$queryRawUnsafe(query, publisherId);
   return result;
 };
 
@@ -95,7 +95,7 @@ const getGenreDetailsById = async (genreId) => {
     WHERE genres.id = $1
   `;
   
-  const result = await prisma.$queryRaw(query, genreId);
+  const result = await prisma.$queryRawUnsafe(query, genreId);
   return result;
 };
 
@@ -109,7 +109,7 @@ const getGameDetailsById = async (gameId) => {
     WHERE games.id = $1
   `;
 
-  const result = await prisma.$queryRaw(query, gameId);
+  const result = await prisma.$queryRawUnsafe(query, gameId);
   return result[0];
 };
 
