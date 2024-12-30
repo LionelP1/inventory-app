@@ -67,12 +67,13 @@ const getGamesByFilters = async (gameTitle, publisherName, genreName) => {
   }
 
   if (conditions.length > 0) {
-    query += ` WHERE ` + conditions.join(` AND `);
+    query += ` WHERE ` + conditions.join(' AND ');
   }
 
-  const result = await prisma.$queryRaw(query, ...values);
+  const result = await prisma.$queryRawUnsafe(query, ...values);
   return result;
 };
+
 
 const getPublisherDetailsById = async (publisherId) => {
   const query = `
