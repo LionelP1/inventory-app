@@ -1,5 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
+const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 async function main() {
@@ -100,9 +99,9 @@ async function main() {
   await prisma.game.create({
     data: {
       title: 'FIFA World',
-      releaseDate: new Date('2013-08-10'),
-      genreId: sportGenre.id,
-      publisherId: eaSportsPublisher.id,
+      release_date: new Date('2013-08-10'),
+      genre_id: sportGenre.id,
+      publisher_id: eaSportsPublisher.id,
       image: 'https://images.igdb.com/igdb/image/upload/t_cover_big/diemodptyfk37ap6jwjq.webp',
     },
   });
@@ -110,9 +109,9 @@ async function main() {
   await prisma.game.create({
     data: {
       title: 'Elden Ring',
-      releaseDate: new Date('2022-02-24'),
-      genreId: fantasyGenre.id,
-      publisherId: fromSoftwarePublisher.id,
+      release_date: new Date('2022-02-24'),
+      genre_id: fantasyGenre.id,
+      publisher_id: fromSoftwarePublisher.id,
       image: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co4jni.webp',
     },
   });
@@ -120,9 +119,9 @@ async function main() {
   await prisma.game.create({
     data: {
       title: 'Grand Theft Auto V',
-      releaseDate: new Date('2013-09-16'),
-      genreId: actionGenre.id,
-      publisherId: rockstarGamesPublisher.id,
+      release_date: new Date('2013-09-16'),
+      genre_id: actionGenre.id,
+      publisher_id: rockstarGamesPublisher.id,
       image: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co2lbd.webp',
     },
   });
@@ -130,9 +129,9 @@ async function main() {
   await prisma.game.create({
     data: {
       title: 'Total War: Warhammer III',
-      releaseDate: new Date('2022-02-16'),
-      genreId: strategyGenre.id,
-      publisherId: theCreativeAssemblyPublisher.id,
+      release_date: new Date('2022-02-16'),
+      genre_id: strategyGenre.id,
+      publisher_id: theCreativeAssemblyPublisher.id,
       image: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co2rze.webp',
     },
   });
@@ -140,9 +139,9 @@ async function main() {
   await prisma.game.create({
     data: {
       title: 'Outer Wilds',
-      releaseDate: new Date('2019-05-28'),
-      genreId: adventureGenre.id,
-      publisherId: mobiusDigitalPublisher.id,
+      release_date: new Date('2019-05-28'),
+      genre_id: adventureGenre.id,
+      publisher_id: mobiusDigitalPublisher.id,
       image: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co65ac.webp',
     },
   });
@@ -150,9 +149,9 @@ async function main() {
   await prisma.game.create({
     data: {
       title: 'Forza Horizon 5',
-      releaseDate: new Date('2021-11-08'),
-      genreId: racingGenre.id,
-      publisherId: playgroundGamesPublisher.id,
+      release_date: new Date('2021-11-08'),
+      genre_id: racingGenre.id,
+      publisher_id: playgroundGamesPublisher.id,
       image: 'https://images.igdb.com/igdb/image/upload/t_cover_big/co3ofx.webp',
     },
   });
