@@ -9,26 +9,26 @@ const getAllRows = async (tableName) => {
 
 const deleteGame = async (gameId) => {
   const query = `DELETE FROM games WHERE id = $1 RETURNING *`;
-  const result = await prisma.$queryRaw(query, gameId);
+  const result = await prisma.$queryRawUnsafe(query, gameId);
   return result[0];
 };
 
 const deletePublisher = async (publisherId) => {
   const deleteGamesQuery = `DELETE FROM games WHERE publisher_id = $1`;
-  await prisma.$queryRaw(deleteGamesQuery, publisherId);
+  await prisma.$queryRawUnsafe(deleteGamesQuery, publisherId);
 
   const deletePublisherQuery = `DELETE FROM publishers WHERE id = $1 RETURNING *`;
-  const result = await prisma.$queryRaw(deletePublisherQuery, publisherId);
+  const result = await prisma.$queryRawUnsafe(deletePublisherQuery, publisherId);
 
   return result[0];
 };
 
 const deleteGenre = async (genreId) => {
   const deleteGamesQuery = `DELETE FROM games WHERE genre_id = $1`;
-  await prisma.$queryRaw(deleteGamesQuery, genreId);
+  await prisma.$queryRawUnsafe(deleteGamesQuery, genreId);
 
   const deleteGenreQuery = `DELETE FROM genres WHERE id = $1 RETURNING *`;
-  const result = await prisma.$queryRaw(deleteGenreQuery, genreId);
+  const result = await prisma.$queryRawUnsafe(deleteGenreQuery, genreId);
 
   return result[0];
 };

@@ -22,11 +22,29 @@ const renderAllData = async (req, res) => {
 };
 
 // DELETING
+// const deleteGame = async (req, res) => {
+//   const { id } = req.params;
+
+//   try {
+//     const deletedRow = await queries.deleteGame(id);
+//     if (deletedRow) {
+//       return res.redirect('/games');
+//     } else {
+//       return renderHelpers.renderError(res, 'Game not found');
+//     }
+//   } catch (error) {
+//     console.error("Error deleting game:", error); 
+//     return renderHelpers.renderError(res, 'Error deleting game');
+//   }
+// };
+
 const deleteGame = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const deletedRow = await queries.deleteGame(id);
+    const gameId = parseInt(id, 10);
+
+    const deletedRow = await queries.deleteGame(gameId);
     if (deletedRow) {
       return res.redirect('/games');
     } else {
@@ -42,7 +60,9 @@ const deletePublisher = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const deletedRow = await queries.deletePublisher(id);
+    const publisherId = parseInt(id, 10);
+
+    const deletedRow = await queries.deletePublisher(publisherId);
     if (deletedRow) {
       return res.redirect('/publishers');
     } else {
@@ -58,7 +78,9 @@ const deleteGenre = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const deletedRow = await queries.deleteGenre(id);
+    const genreId = parseInt(id, 10);
+
+    const deletedRow = await queries.deleteGenre(genreId);
     if (deletedRow) {
       return res.redirect('/genres');
     } else {
@@ -69,6 +91,38 @@ const deleteGenre = async (req, res) => {
     return renderHelpers.renderError(res, 'Error deleting genre');
   }
 };
+
+// const deletePublisher = async (req, res) => {
+//   const { id } = req.params;
+
+//   try {
+//     const deletedRow = await queries.deletePublisher(id);
+//     if (deletedRow) {
+//       return res.redirect('/publishers');
+//     } else {
+//       return renderHelpers.renderError(res, 'Publisher not found');
+//     }
+//   } catch (error) {
+//     console.error("Error deleting publisher:", error); 
+//     return renderHelpers.renderError(res, 'Error deleting publisher');
+//   }
+// };
+
+// const deleteGenre = async (req, res) => {
+//   const { id } = req.params;
+
+//   try {
+//     const deletedRow = await queries.deleteGenre(id);
+//     if (deletedRow) {
+//       return res.redirect('/genres');
+//     } else {
+//       return renderHelpers.renderError(res, 'Genre not found');
+//     }
+//   } catch (error) {
+//     console.error("Error deleting genre:", error); 
+//     return renderHelpers.renderError(res, 'Error deleting genre');
+//   }
+// };
 
 // RENDERING FILTERED GAMES
 const renderFilteredGames = async (req, res) => {
