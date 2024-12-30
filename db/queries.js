@@ -58,7 +58,7 @@ const getGamesByFilters = async (gameTitle, publisherName, genreName) => {
   }
 
   if (publisherName) {
-    conditions.push(`publishers.name ILIKE $${conditions.length + 1}`); // Corrected to use publisher name
+    conditions.push(`publishers.name ILIKE $${conditions.length + 1}`);
     values.push(`%${publisherName}%`);
   }
 
@@ -72,6 +72,7 @@ const getGamesByFilters = async (gameTitle, publisherName, genreName) => {
   }
 
   const { rows } = await pool.query(query, values);
+  console.log(rows);
   return rows;
 };
 

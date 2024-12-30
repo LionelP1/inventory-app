@@ -1,4 +1,4 @@
-const { PrismaClient } = require("@prisma/client");
+const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const getAllRows = async (tableName) => {
@@ -34,8 +34,8 @@ const deleteGenre = async (genreId) => {
 };
 
 const insertRow = async (tableName, columns, values) => {
-  const columnList = columns.join(", ");
-  const placeholders = columns.map((_, index) => `$${index + 1}`).join(", ");
+  const columnList = columns.join(`, `);
+  const placeholders = columns.map((_, index) => `$${index + 1}`).join(`, `);
   const query = `INSERT INTO ${tableName} (${columnList}) VALUES (${placeholders})`;
   await prisma.$queryRaw(query, ...values);
 };
@@ -67,7 +67,7 @@ const getGamesByFilters = async (gameTitle, publisherName, genreName) => {
   }
 
   if (conditions.length > 0) {
-    query += ` WHERE ` + conditions.join(' AND ');
+    query += ` WHERE ` + conditions.join(` AND `);
   }
 
   const result = await prisma.$queryRaw(query, ...values);
@@ -82,7 +82,7 @@ const getPublisherDetailsById = async (publisherId) => {
     WHERE publishers.id = $1
   `;
   
-  const result = await prisma.$queryRaw(query, publisherId);
+  const result = await prisma.$queryRawUnsafe(query, publisherId);
   return result;
 };
 
@@ -109,7 +109,7 @@ const getGameDetailsById = async (gameId) => {
   `;
 
   const result = await prisma.$queryRaw(query, gameId);
-  return result[0]; // Prisma returns results as an array
+  return result[0];
 };
 
 const updateGame = async (updateValues) => {
