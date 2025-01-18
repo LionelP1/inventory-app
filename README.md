@@ -4,7 +4,7 @@
 The Inventory Management App allows users to manage a collection of video games, publishers, and genres. It features an intuitive interface for adding, editing, and deleting entries, as well as displaying detailed information about each game, publisher, and genre. The app supports filtering and searching for specific games based on various criteria, with user-friendly forms for data entry.
 
 ## Live Demo
-[Inventory Management App Live Demo]()
+[Inventory Management App Live Demo](https://inventory-app-production-fe9a.up.railway.app/games)
 
 ## Features
 - **Add New Entries:** Easily add new games, publishers, and genres to the inventory.
